@@ -1,10 +1,11 @@
 # Sensors
 PRODUCT_PACKAGES += \
-    sensors.msm8916
+    sensors.msm8916 \
+    android.hardware.sensors@1.0-impl
 
 # Multi HAL configuration file
 PRODUCT_COPY_FILES += \
-    device/xiaomi/ferrari/sensors/etc/hals.conf:system/etc/sensors/hals.conf
+    device/xiaomi/ferrari/sensors/etc/hals.conf:vendor/etc/sensors/hals.conf
 
 # Permissions
 PRODUCT_COPY_FILES += \
