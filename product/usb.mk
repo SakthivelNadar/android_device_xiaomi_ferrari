@@ -3,14 +3,16 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.ethernet.xml:system/etc/permissions/android.hardware.ethernet.xml \
     frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml
 
+# USB VID
+ADDITIONAL_DEFAULT_PROPERTIES += \
+    ro.usb.vid=2717
+
 # USB ID
-#ADDITIONAL_DEFAULT_PROPERTIES += \
-#    ro.usb.id.midi=90BA \
-#    ro.usb.id.midi_adb=90BB \
-#    ro.usb.id.mtp=2281 \
-#    ro.usb.id.mtp_adb=2282 \
-#    ro.usb.id.ptp=2284 \
-#    ro.usb.id.ptp_adb=2283 \
-#    ro.usb.id.ums=2286 \
-#    ro.usb.id.ums_adb=2285 \
-#    ro.usb.vid=2970
+    ro.usb.id.rndis=ff80 \
+    ro.usb.id.rndis_adb=ff88 \
+    ro.usb.id.mtp=ff60 \
+    ro.usb.id.mtp_adb=ff68 \
+    ro.usb.id.ptp=ff10 \
+    ro.usb.id.ptp_adb=ff18 \
+    ro.usb.id.ums=F000 \
+    ro.usb.id.ums_adb=9015
