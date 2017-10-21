@@ -16,3 +16,9 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
     ro.usb.id.ptp_adb=ff18 \
     ro.usb.id.ums=F000 \
     ro.usb.id.ums_adb=9015
+
+# midi support (masquerade as marlin)
+ADDITIONAL_DEFAULT_PROPERTIES += \
+    ro.usb.vid.midi=18D1 \
+    ro.usb.id.midi=4EE8 \
+    ro.usb.id.midi_adb=4EE9
