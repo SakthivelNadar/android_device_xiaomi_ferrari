@@ -128,6 +128,13 @@ PRODUCT_SHIPPING_API_LEVEL := 19
 # System Properties
 $(call inherit-product, device/xiaomi/ferrari/system_prop.mk)
 
+# Telephony
+PRODUCT_PACKAGES += \
+    telephony-ext
+
+PRODUCT_BOOT_JARS += \
+    telephony-ext
+
 # Thermal
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/thermal-engine-8939.conf:system/etc/thermal-engine-8939.conf \
