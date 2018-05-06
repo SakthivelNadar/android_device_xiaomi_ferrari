@@ -1,3 +1,6 @@
+on init
+    setprop ro.board.platform msm8916
+
 ## crypto
 on property:ro.crypto.state=encrypted
     start qseecomd
