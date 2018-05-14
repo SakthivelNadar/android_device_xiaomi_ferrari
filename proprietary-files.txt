@@ -31,8 +31,7 @@ vendor/lib/soundfx/libqcreverb.so
 vendor/lib/soundfx/libqcvirt.so
 
 # Bluetooth
-bin/btnvtool
-bin/hci_qcomm_init
+bin/hci_qcomm_init|516e78a98b50afbec28eae31700f065986ee4987
 vendor/lib64/libbtnv.so
 
 # Camera
