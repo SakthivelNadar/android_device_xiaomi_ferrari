@@ -9,4 +9,5 @@ PRODUCT_COPY_FILES += \
 
 # Packages
 PRODUCT_PACKAGES += \
-    libwcnss_qmi
+    libwcnss_qmi \
+    readmac

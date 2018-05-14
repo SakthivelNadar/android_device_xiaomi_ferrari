@@ -19,8 +19,9 @@
 #define LOG_TAG "wcnss_xiaomi"
 
 #define MAC_ADDR_SIZE 6
-#define WLAN_MAC_BIN "/persist/mac.wlan.bin"
+#define WLAN_MAC_BIN "/persist/wlan_mac.bin"
 
+#include <errno.h>
 #include <string.h>
 #include <cutils/log.h>
 
@@ -76,10 +77,20 @@ static int check_wlan_mac_bin_file(uint8_t buf[]) {
 	char content[6+1];
 	FILE* fp;
 	size_t i;
+	int retries = 5;
 
+_read:
 	fp = fopen(WLAN_MAC_BIN, "r");
-	if (fp == NULL)
+	if (fp == NULL) {
+		ALOGE("Error: read WLAN_MAC_BIN(%s) failed: %d (%s)\n", WLAN_MAC_BIN, errno, strerror(errno));
+
+		if (retries-- > 0 && errno == ENOENT) {
+			sleep(1);
+			goto _read;
+		}
+
 		return -1;
+	}
 
 	memset(content, 0, sizeof(content));
 	fread(content, 1, sizeof(content) - 1, fp);
