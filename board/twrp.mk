@@ -12,4 +12,8 @@ TW_MTP_DEVICE := "/dev/mtp_usb"
 TW_NO_USB_STORAGE := true
 TW_OEM_BUILD := false
 
+# Time Zone data for TWRP
+PRODUCT_COPY_FILES += \
+    bionic/libc/zoneinfo/tzdata:recovery/root/system/usr/share/zoneinfo/tzdata
+
 endif
