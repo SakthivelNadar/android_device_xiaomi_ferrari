@@ -1,3 +1,5 @@
+ifeq (0,1)
+
 ifeq ($(call my-dir),$(call project-path-for,qcom-camera))
 MM_V4L2_DRIVER_LIST += msm8960
 MM_V4L2_DRIVER_LIST += msm8974
@@ -12,4 +14,6 @@ ifeq ($(call is-board-platform-in-list,$(MM_V4L2_DRIVER_LIST)),true)
       include $(call all-subdir-makefiles)
     endif
 endif
+endif
+
 endif
