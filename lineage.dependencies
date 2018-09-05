@@ -1,9 +1,5 @@
 [
   {
-    "repository": "android_kernel_xiaomi_ferrari",
-    "target_path": "kernel/xiaomi/ferrari"
-  },
-  {
     "repository": "android_external_stlport",
     "target_path": "external/stlport"
   },
