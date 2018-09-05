@@ -31,6 +31,7 @@ PRODUCT_MANUFACTURER := Xiaomi
 PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
-	BUILD_FINGERPRINT="Xiaomi/ferrari/ferrari:5.0.2/LRX22G/V8.1.5.0.LXIMIDI:user/release-keys" \
 	PRIVATE_BUILD_DESC="ferrari-user 5.0.2 LRX22G V8.1.5.0.LXIMIDI release-keys" \
 	PRODUCT_NAME="ferrari"
+
+BUILD_FINGERPRINT := "Xiaomi/ferrari/ferrari:5.0.2/LRX22G/V8.1.5.0.LXIMIDI:user/release-keys"
