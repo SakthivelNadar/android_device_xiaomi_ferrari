@@ -1,12 +1,15 @@
 # Audio
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/audio/aanc_tuning_mixer.txt:system/etc/aanc_tuning_mixer.txt \
-    $(LOCAL_PATH)/audio/audio_platform_info.xml:system/etc/audio_platform_info.xml \
-    $(LOCAL_PATH)/audio/audio_policy.conf:system/etc/audio_policy.conf \
-    $(LOCAL_PATH)/audio/init.qcom.audio.sh:system/etc/init.qcom.audio.sh \
-    $(LOCAL_PATH)/audio/mixer_paths_wcd9306.xml:system/etc/mixer_paths_wcd9306.xml \
-    $(LOCAL_PATH)/audio/sound_trigger_mixer_paths.xml:system/etc/sound_trigger_mixer_paths.xml \
-    $(LOCAL_PATH)/audio/sound_trigger_platform_info.xml:system/etc/sound_trigger_platform_info.xml
+    $(LOCAL_PATH)/audio/acdb/MTP_WCD9306_Bluetooth_cal.acdb:system/etc/acdbdata/MTP/MTP_WCD9306_Bluetooth_cal.acdb \
+    $(LOCAL_PATH)/audio/acdb/MTP_WCD9306_General_cal.acdb:system/etc/acdbdata/MTP/MTP_WCD9306_General_cal.acdb \
+    $(LOCAL_PATH)/audio/acdb/MTP_WCD9306_Global_cal.acdb:system/etc/acdbdata/MTP/MTP_WCD9306_Global_cal.acdb \
+    $(LOCAL_PATH)/audio/acdb/MTP_WCD9306_Handset_cal.acdb:system/etc/acdbdata/MTP/MTP_WCD9306_Handset_cal.acdb \
+    $(LOCAL_PATH)/audio/acdb/MTP_WCD9306_Hdmi_cal.acdb:system/etc/acdbdata/MTP/MTP_WCD9306_Hdmi_cal.acdb \
+    $(LOCAL_PATH)/audio/acdb/MTP_WCD9306_Headset_cal.acdb:system/etc/acdbdata/MTP/MTP_WCD9306_Headset_cal.acdb \
+    $(LOCAL_PATH)/audio/acdb/MTP_WCD9306_Speaker_cal.acdb:system/etc/acdbdata/MTP/MTP_WCD9306_Speaker_cal.acdb \
+    $(LOCAL_PATH)/audio/audio_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_platform_info.xml \
+    $(LOCAL_PATH)/audio/audio_policy.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy.conf \
+    $(LOCAL_PATH)/audio/mixer_paths_wcd9306.xml:$(TARGET_COPY_OUT_VENDOR)/etc/mixer_paths_wcd9306.xml
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -15,7 +18,7 @@ PRODUCT_COPY_FILES += \
 # Properties
 PRODUCT_PROPERTY_OVERRIDES += \
     audio.offload.disable=1 \
-    ro.qc.sdk.audio.fluencetype=fluence \
-    persist.audio.fluence.voicecall=true \
-    persist.audio.fluence.voicerec=false \
-    persist.audio.fluence.speaker=false
+    ro.vendor.audio.sdk.fluencetype=fluence \
+    persist.vendor.audio.fluence.voicecall=true \
+    persist.vendor.audio.fluence.voicerec=false \
+    persist.vendor.audio.fluence.speaker=false
