@@ -22,3 +22,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.audio.fluence.voicecall=true \
     persist.vendor.audio.fluence.voicerec=false \
     persist.vendor.audio.fluence.speaker=false
+
+# tinyplay
+PRODUCT_PACKAGES += \
+    tinyplay
