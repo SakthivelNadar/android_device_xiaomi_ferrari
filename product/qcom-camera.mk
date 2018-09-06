@@ -2,7 +2,6 @@
 PRODUCT_PACKAGES += \
 #   camera.msm8916 \
 #   libmm-qcamera \
-    libstlport \
     Snap
 
 # Permissions

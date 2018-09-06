@@ -529,6 +529,9 @@ vendor/lib/libmdmdetect.so|2c57282fce7367471e44a35305ace773ae89fd30
 vendor/lib/libsensors.lsm6db0.so
 vendor/lib64/libsensors.lsm6db0.so
 
+# STLport
+vendor/lib64/libstlport.so|89c22bb0735cd02218aa8e4439844bd6cba1771d
+
 # TFA9887
 etc/firmware/seltech_mono.cnt:vendor/etc/firmware/seltech_mono.cnt
 
