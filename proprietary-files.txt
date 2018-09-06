@@ -464,7 +464,7 @@ lib64/libqminvapi.so:vendor/lib64/libqminvapi.so
 lib/libqminvapi.so:vendor/lib/libqminvapi.so
 bin/irsc_util:vendor/bin/irsc_util|930544024d17c8ddd89d0931259e32face034c34
 vendor/lib64/libdiag.so|f59c5066ab1eba93f90a518c61b48dd4fcad48bc
-vendor/lib64/libdsi_netctrl.so|794b7873910b2e17cb27caef8b12b0f555acf7e9
+vendor/lib64/libdsi_netctrl.so|80fbb9f1d2985fd2daff279a62d7e0607bcece78
 vendor/lib64/libdsutils.so|6d91c70c64e13c80cc64920858451058a83c2d28
 vendor/lib64/libidl.so|5cf38aa2fe70ff20813bde5069723432b44dcde6
 vendor/lib64/libqcci_legacy.so|8faee1f1712aa0b6d18964949c69f43d4f2386ab
@@ -480,7 +480,7 @@ vendor/lib64/libqmiservices.so|f9e8f7777bb9e6faa5dce3f1ad8ac159d4a6bc3b
 vendor/lib64/libqmi.so|298d415d48270c36d19f509304790003d280edae
 vendor/lib64/libsmemlog.so|37162480cdd93b25d4f2829f5aa53abbac7a1b8e
 vendor/lib/libdiag.so|3a72d687831a987ab7df6e8a4a4f72acc9fbf611
-vendor/lib/libdsi_netctrl.so|bfaf4ceabb2d9e5f5ed77023fa3c6c1a069609cc
+vendor/lib/libdsi_netctrl.so|4e0e79e12cc58fe601eb9090022271b5ff4d8b23
 vendor/lib/libdsutils.so|4b739b8fa04ac8ff9c984fed445f0462c8000a46
 vendor/lib/libidl.so|eadf4f3f7d25ec642cc457d4f6d16912682b0508
 vendor/lib/libqcci_legacy.so|0c7658add55e45afbc063ee2d29d0d5209b6308b
@@ -498,8 +498,8 @@ vendor/lib/libsmemlog.so|c632a70764ee1d6416ce1758f4d10cd6983d204d
 
 # Radio (from kipper)
 -app/shutdownlistener/shutdownlistener.apk:vendor/app/shutdownlistener/shutdownlistener.apk|61bf2ac0e7c312036423f2c77a310aa310d06f7b
-bin/netmgrd:vendor/bin/netmgrd|f6e0a4f92bd0cc8e9cf7be1d2a60ffde4ce7123a
-bin/qmuxd:vendor/bin/qmuxd|d36ad140da7833c0b82ecb28262360d3e974cb0d
+bin/netmgrd:vendor/bin/netmgrd|c7ec4849b808f64e6414b2180ed16122f757d963
+bin/qmuxd:vendor/bin/qmuxd|e1e334eea46eebba048d8e3399166604ccba7a00
 bin/radish:vendor/bin/radish|9cb3017bc4ece05809662d76f9141044b1daee6c
 bin/rmt_storage:vendor/bin/rmt_storage|ddec53a336abfe30f96d0eaa83565936166c571f
 etc/permissions/qcnvitems.xml:vendor/etc/permissions/qcnvitems.xml|dc0e70cace2317b5169a454cbc2bbf8887c18d55
