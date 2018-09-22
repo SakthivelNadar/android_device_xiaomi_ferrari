@@ -1,4 +1,3 @@
-ifeq ($(WITH_TWRP),true)
 TARGET_RECOVERY_DEVICE_DIRS += device/xiaomi/ferrari/twrp
 TW_INCLUDE_CRYPTO := true
 TW_THEME := portrait_hdpi
@@ -16,5 +15,3 @@ TW_EXCLUDE_TWRPAPP := true
 # Time Zone data for TWRP
 PRODUCT_COPY_FILES += \
     bionic/libc/zoneinfo/tzdata:recovery/root/system/usr/share/zoneinfo/tzdata
-
-endif
