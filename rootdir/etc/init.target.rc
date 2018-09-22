@@ -27,14 +27,7 @@
 #
 #
 
-on post-fs-data
-    chown system system /dev/sysmatdrv
-    chmod 0660 /dev/sysmatdrv
-
 on boot
-    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/device/extldo
-    chmod 0660 /sys/class/rfkill/rfkill0/device/extldo
-    mkdir /persist/bluetooth 0770 bluetooth bluetooth
 
     # Notification LED permissions
     write /sys/class/leds/red/trigger   "timer"
@@ -66,51 +59,8 @@ on boot
     chown system system /sys/devices/soc.0/78b9000.i2c/i2c-5/5-004a/wakeup_mode
     chmod 0660 /sys/devices/soc.0/78b9000.i2c/i2c-5/5-004a/wakeup_mode
 
-on property:bluetooth.isEnabled=true
-    start btwlancoex
-    write /sys/class/bluetooth/hci0/idle_timeout 7000
-
-on property:bluetooth.sap.status=running
-    start bt-sap
-
-on property:bluetooth.sap.status=stopped
-    stop bt-sap
-
-on property:bluetooth.startbtsnoop=true
-    start btsnoop
-
-on property:bluetooth.startbtsnoop=false
-    stop btsnoop
-
-service bt-sap /system/bin/sapd 15
-    user bluetooth
-    group bluetooth net_bt_admin
-    class late_start
-    disabled
-    oneshot
-
-service btsnoop /system/bin/btsnoop
-   user bluetooth
-   group bluetooth net_bt_admin sdcard_rw sdcard_r
-   class late_start
-   disabled
-   oneshot
-
 service readmac /system/vendor/bin/readmac
     class main
     user root
     group root system radio qcom_diag bluetooth
     oneshot
-
-service ppd /system/bin/mm-pp-daemon
-    class late_start
-    disabled
-    user system
-    socket pps stream 0660 system system
-    group system graphics
-
-on property:init.svc.surfaceflinger=stopped
-    stop ppd
-
-on property:init.svc.surfaceflinger=running
-    start ppd
