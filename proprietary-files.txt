@@ -504,6 +504,7 @@ bin/radish:vendor/bin/radish|9cb3017bc4ece05809662d76f9141044b1daee6c
 bin/rmt_storage:vendor/bin/rmt_storage|ddec53a336abfe30f96d0eaa83565936166c571f
 etc/permissions/qcnvitems.xml:vendor/etc/permissions/qcnvitems.xml|dc0e70cace2317b5169a454cbc2bbf8887c18d55
 etc/permissions/qcrilhook.xml:vendor/etc/permissions/qcrilhook.xml|9fc58a3d54d20ac1d53bab14608815121aefbce5
+lib64/librilqmiservices.so:vendor/lib64/librilqmiservices.so|f2e5672219ea59c479f2389c70ac0907a7a78265
 -framework/qcnvitems.jar:vendor/framework/qcnvitems.jar|b50c25a4760313acd6ad770bf1ee207b5376b53e
 -framework/qcrilhook.jar:vendor/framework/qcrilhook.jar|4ac8f925c1e76da54279867a14c32e5bc868b6df
 -priv-app/qcrilmsgtunnel/qcrilmsgtunnel.apk|8ca1e2e05596914c57d3a4ce0f367d810da7bb7f
