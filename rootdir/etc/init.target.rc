@@ -62,5 +62,5 @@ on boot
 service readmac /system/vendor/bin/readmac
     class main
     user root
-    group root system radio qcom_diag bluetooth
+    group root system radio oem_2950 bluetooth
     oneshot
