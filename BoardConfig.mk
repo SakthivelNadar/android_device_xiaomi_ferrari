@@ -72,8 +72,6 @@ else
 TARGET_KERNEL_CONFIG := ferrari_defconfig
 endif
 
-BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
-
 # LineageHW
 BOARD_HARDWARE_CLASS += $(DEVICE_PATH)/lineagehw
 TARGET_TAP_TO_WAKE_NODE := "/sys/devices/soc.0/78b9000.i2c/i2c-5/5-004a/wakeup_mode"
