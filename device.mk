@@ -41,8 +41,10 @@ TARGET_SCREEN_WIDTH := 1080
 
 # Camera
 PRODUCT_PACKAGES += \
-#   camera.msm8916 \
-#   libmm-qcamera \
+    android.hardware.camera.provider@2.4-impl-legacy \
+    camera.device@1.0-impl \
+    camera.msm8916 \
+    libmm-qcamera \
     Snap
 
 # Dalvik

@@ -10,10 +10,15 @@ ro.bt.bdaddr_path=/data/misc/bluetooth/bdaddr
 
 # Camera
 persist.camera.cpp.duplication=false
+camera2.portability.force_api=1
 persist.camera.hal.debug.mask=0
 
 # Display
 ro.sf.lcd_density=480
+
+# Media
+media.stagefright.legacyencoder=true
+media.stagefright.less-secure=true
 
 # First api level, device has been commercially launched
 ro.product.first_api_level=21
