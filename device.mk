@@ -118,6 +118,7 @@ PRODUCT_PACKAGES += \
 # shims
 PRODUCT_PACKAGES += \
     libcamera_shim \
+    libshims_flp \
     libshims_get_process_name
 
 # Thermal

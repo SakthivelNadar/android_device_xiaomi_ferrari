@@ -90,11 +90,14 @@ BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy
 
 # Shims
 TARGET_LD_SHIM_LIBS += \
+    /system/lib/libmmjpeg_interface.so|libcamera_shim.so \
     /system/vendor/bin/mm-pp-daemon|libcamera_shim.so \
     /system/vendor/bin/perfd|libcamera_shim.so \
+    /system/vendor/lib64/libflp.so|libshims_flp.so \
     /system/vendor/lib64/libizat_core.so|libshims_get_process_name.so \
-    /system/vendor/lib/libmmcamera2_imglib_modules.so|libcamera_shim.so \
-    /system/lib/libmmjpeg_interface.so|libcamera_shim.so
+    /system/vendor/lib/libflp.so|libshims_flp.so \
+    /system/vendor/lib/libizat_core.so|libshims_get_process_name.so \
+    /system/vendor/lib/libmmcamera2_imglib_modules.so|libcamera_shim.so
 
 # TWRP
 ifeq ($(WITH_TWRP),true)
