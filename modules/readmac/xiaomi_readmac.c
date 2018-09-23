@@ -309,6 +309,7 @@ int main()
 
 	if ( (check_mac_file(WLAN_MAC_BIN, 1) == 0) && (check_mac_file(BD_MAC_BIN, 0) == 0) ) {
 		fprintf(stderr, "mac addr files already exist! returning.\n");
+		ALOGI("mac addr files already exist! returning.\n");
 
 		// fix permissions anyway
 		chmod(WLAN_MAC_BIN, S_IRUGO | S_IWUSR);
