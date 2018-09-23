@@ -114,7 +114,8 @@ PRODUCT_PACKAGES += \
 
 # shims
 PRODUCT_PACKAGES += \
-    libcamera_shim
+    libcamera_shim \
+    libshims_get_process_name
 
 # Thermal
 PRODUCT_COPY_FILES += \
