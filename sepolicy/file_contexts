@@ -1,5 +1,5 @@
 # for Settings' access to VibratorHW
-/sys/class/timed_output/vibrator/enable         u:object_r:sysfs_vibrator:s0
+/sys/class/timed_output/vibrator/enable                                          u:object_r:sysfs_vibrator:s0
 
 # Dev block nodes
 /dev/block/platform/soc\.0/7824900\.sdhci/by-name/bk1                            u:object_r:metadata_block_device:s0
@@ -8,4 +8,7 @@
 /(vendor|system/vendor)/bin/hw/android\.hardware\.light@2\.0-service\.ferrari    u:object_r:hal_light_default_exec:s0
 
 # binaries
-/(vendor|system/vendor)/bin/readmac           u:object_r:readmac_exec:s0
+/(vendor|system/vendor)/bin/readmac                                              u:object_r:readmac_exec:s0
+
+# target
+/(vendor|system/vendor)/bin/init\.target\.sh                                     u:object_r:qti_init_shell_exec:s0

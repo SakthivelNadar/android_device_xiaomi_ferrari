@@ -72,7 +72,7 @@ endif
 
 # LineageHW
 BOARD_HARDWARE_CLASS += $(DEVICE_PATH)/lineagehw
-TARGET_TAP_TO_WAKE_NODE := "/sys/devices/soc.0/78b9000.i2c/i2c-5/5-004a/wakeup_mode"
+TARGET_TAP_TO_WAKE_NODE := "/proc/touchpanel/double_tap_enable"
 
 # Manifest
 DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/manifest.xml

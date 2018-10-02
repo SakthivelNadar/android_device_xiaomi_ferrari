@@ -1,6 +1,6 @@
 # CmHardwareService access to TapToWake and KeyDisabler
-allow system_server touchpanel_sysfs:file rw_file_perms;
-allow system_server touchpanel_sysfs:dir { search };
+allow system_server proc_touchpanel:dir search;
+allow system_server proc_touchpanel:file rw_file_perms;
 
 # Sensor calibration files
 allow system_server persist_file : file { read write create getattr setattr open };

@@ -27,8 +27,7 @@ import org.lineageos.internal.util.FileUtils;
  * otherwise visible-when-inactive keys
  */
 public class KeyDisabler {
-    private static final String CONTROL_PATH =
-            "/sys/devices/soc.0/78b9000.i2c/i2c-5/5-004a/disable_keys";
+    private static final String CONTROL_PATH = "/proc/touchpanel/disable_keys";
 
     public static boolean isSupported() {
         return FileUtils.isFileReadable(CONTROL_PATH) &&

@@ -51,16 +51,13 @@ on boot
     chown system system /sys/class/timed_output/vibrator/amp
     chmod 0664 /sys/class/timed_output/vibrator/amp
 
-    ## cmhw permissions
-    # key disabler
-    chown system system /sys/devices/soc.0/78b9000.i2c/i2c-5/5-004a/disable_keys
-
-    # doubletap to wake
-    chown system system /sys/devices/soc.0/78b9000.i2c/i2c-5/5-004a/wakeup_mode
-    chmod 0660 /sys/devices/soc.0/78b9000.i2c/i2c-5/5-004a/wakeup_mode
-
 service readmac /system/vendor/bin/readmac
     class main
     user root
     group root system radio oem_2950 bluetooth
+    oneshot
+
+service target-sh /vendor/bin/init.target.sh
+    class late_start
+    user root
     oneshot
