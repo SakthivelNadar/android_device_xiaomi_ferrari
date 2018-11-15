@@ -513,7 +513,7 @@ static void get_so_paths(std::vector<std::string> *so_paths) {
             break;
         }
     }
-    if(!stream) {
+    if(!stream.is_open()) {
         ALOGW("No multihal config file found");
         return;
     }
