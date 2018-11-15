@@ -14,33 +14,30 @@
  * limitations under the License.
  */
 
-#include <hardware/sensors.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <dirent.h>
-#include <math.h>
-#include <poll.h>
-#include <pthread.h>
-#include <cutils/atomic.h>
+#include "SensorEventQueue.h"
+#include "multihal.h"
 
 #define LOG_NDEBUG 1
 #include <cutils/log.h>
+#include <cutils/atomic.h>
+#include <hardware/sensors.h>
 
 #include <vector>
 #include <string>
 #include <fstream>
 #include <map>
-#include <string>
 
-#include <stdio.h>
+#include <dirent.h>
 #include <dlfcn.h>
-#include <SensorEventQueue.h>
-
+#include <errno.h>
+#include <fcntl.h>
 #include <limits.h>
+#include <math.h>
+#include <poll.h>
+#include <pthread.h>
+#include <stdio.h>
 #include <stdlib.h>
 
-static const char* CONFIG_FILENAME = "/system/etc/sensors/hals.conf";
-static const int MAX_CONF_LINE_LENGTH = 1024;
 
 static pthread_mutex_t init_modules_mutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_mutex_t init_sensors_mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -258,9 +255,9 @@ int sensors_poll_context_t::get_device_version_by_handle(int handle) {
     }
 }
 
-// Android L requires sensor HALs to be either 1_0 or 1_3 compliant
+// Android N and hire require sensor HALs to be at least 1_3 compliant
 #define HAL_VERSION_IS_COMPLIANT(version)  \
-    (version == SENSORS_DEVICE_API_VERSION_1_0 || version >= SENSORS_DEVICE_API_VERSION_1_3)
+    (version >= SENSORS_DEVICE_API_VERSION_1_3)
 
 // Returns true if HAL is compliant, false if HAL is not compliant or if handle is invalid
 static bool halIsCompliant(sensors_poll_context_t *ctx, int handle) {
@@ -472,9 +469,7 @@ static int device__poll(struct sensors_poll_device_t *dev, sensors_event_t* data
 static int device__batch(struct sensors_poll_device_1 *dev, int handle,
         int flags, int64_t period_ns, int64_t timeout) {
     sensors_poll_context_t* ctx = (sensors_poll_context_t*) dev;
-    (void)(flags);
-    (void)(timeout);
-    return ctx->setDelay(handle, period_ns);
+    return ctx->batch(handle, flags, period_ns, timeout);
 }
 
 static int device__flush(struct sensors_poll_device_1 *dev, int handle) {
@@ -505,15 +500,32 @@ static bool starts_with(const char* s, const char* prefix) {
  * The vector must not be null.
  */
 static void get_so_paths(std::vector<std::string> *so_paths) {
-    std::string line;
-    std::ifstream conf_file(CONFIG_FILENAME);
+    const std::vector<const char *> config_path_list(
+            { MULTI_HAL_CONFIG_FILE_PATH, DEPRECATED_MULTI_HAL_CONFIG_FILE_PATH });
 
-    if(!conf_file) {
-        ALOGW("No multihal config file found at %s", CONFIG_FILENAME);
+    std::ifstream stream;
+    const char *path = nullptr;
+    for (auto i : config_path_list) {
+        std::ifstream f(i);
+        if (f) {
+            stream = std::move(f);
+            path = i;
+            break;
+        }
+    }
+    if(!stream) {
+        ALOGW("No multihal config file found");
         return;
     }
-    ALOGV("Multihal config file found at %s", CONFIG_FILENAME);
-    while (std::getline(conf_file, line)) {
+
+    ALOGE_IF(strcmp(path, DEPRECATED_MULTI_HAL_CONFIG_FILE_PATH) == 0,
+            "Multihal configuration file path %s is not compatible with Treble "
+            "requirements. Please move it to %s.",
+            path, MULTI_HAL_CONFIG_FILE_PATH);
+
+    ALOGV("Multihal config file found at %s", path);
+    std::string line;
+    while (std::getline(stream, line)) {
         ALOGV("config file line: '%s'", line.c_str());
         so_paths->push_back(line);
     }
@@ -529,14 +541,14 @@ static void lazy_init_modules() {
         pthread_mutex_unlock(&init_modules_mutex);
         return;
     }
-    std::vector<std::string> so_paths;
-    get_so_paths(&so_paths);
+    std::vector<std::string> *so_paths = new std::vector<std::string>();
+    get_so_paths(so_paths);
 
     // dlopen the module files and cache their module symbols in sub_hw_modules
     sub_hw_modules = new std::vector<hw_module_t *>();
     dlerror(); // clear any old errors
     const char* sym = HAL_MODULE_INFO_SYM_AS_STR;
-    for (std::vector<std::string>::iterator it = so_paths.begin(); it != so_paths.end(); it++) {
+    for (std::vector<std::string>::iterator it = so_paths->begin(); it != so_paths->end(); it++) {
         const char* path = it->c_str();
         void* lib_handle = dlopen(path, RTLD_LAZY);
         if (lib_handle == NULL) {
@@ -620,11 +632,6 @@ static void lazy_init_sensors_list() {
             ALOGV("module_index %d, local_handle %d, global_handle %d",
                     module_index, local_handle, global_handle);
 
-            if (mutable_sensor_list[mutable_sensor_index].type == SENSOR_TYPE_PROXIMITY) {
-                ALOGV("override proximity range");
-                mutable_sensor_list[mutable_sensor_index].maxRange = 5.0;
-            }
-
             mutable_sensor_index++;
         }
         module_index++;
@@ -656,7 +663,7 @@ struct sensors_module_t HAL_MODULE_INFO_SYM = {
     .common = {
         .tag = HARDWARE_MODULE_TAG,
         .version_major = 1,
-        .version_minor = 0,
+        .version_minor = 1,
         .id = SENSORS_HARDWARE_MODULE_ID,
         .name = "MultiHal Sensor Module",
         .author = "Google, Inc",
@@ -666,6 +673,10 @@ struct sensors_module_t HAL_MODULE_INFO_SYM = {
     },
     .get_sensors_list = module__get_sensors_list
 };
+
+struct sensors_module_t *get_multi_hal_module_info() {
+    return (&HAL_MODULE_INFO_SYM);
+}
 
 static int open_sensors(const struct hw_module_t* hw_module, const char* name,
         struct hw_device_t** hw_device_out) {
@@ -677,7 +688,7 @@ static int open_sensors(const struct hw_module_t* hw_module, const char* name,
     sensors_poll_context_t *dev = new sensors_poll_context_t();
     memset(dev, 0, sizeof(sensors_poll_device_1_t));
     dev->proxy_device.common.tag = HARDWARE_DEVICE_TAG;
-    dev->proxy_device.common.version = SENSORS_DEVICE_API_VERSION_1_0;
+    dev->proxy_device.common.version = SENSORS_DEVICE_API_VERSION_1_4;
     dev->proxy_device.common.module = const_cast<hw_module_t*>(hw_module);
     dev->proxy_device.common.close = device__close;
     dev->proxy_device.activate = device__activate;
