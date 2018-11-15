@@ -69,6 +69,7 @@ TARGET_KERNEL_CONFIG := ferrari-recovery_defconfig
 else
 TARGET_KERNEL_CONFIG := ferrari_defconfig
 endif
+BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 
 # LineageHW
 BOARD_HARDWARE_CLASS += $(DEVICE_PATH)/lineagehw
