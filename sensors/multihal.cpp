@@ -386,7 +386,38 @@ int sensors_poll_context_t::batch(int handle, int flags, int64_t period_ns, int6
     int local_handle = get_local_handle(handle);
     sensors_poll_device_1_t* v1 = this->get_v1_device_by_handle(handle);
     if (halIsCompliant(this, handle) && local_handle >= 0 && v1) {
+#if 0
         retval = v1->batch(v1, local_handle, flags, period_ns, timeout);
+#else
+        (void)flags;
+
+        // NOTE: unlike setDelay(), batch() can be called when the
+        // sensor is disabled.
+
+        // Negative values are not allowed
+        if (period_ns < 0 || timeout < 0) {
+            ALOGE("%s: Invalid parameters", __func__);
+            return -EINVAL;
+        }
+
+        // The HAL should silently clamp period_ns. Here it is assumed
+        // that maxDelay and minDelay are set properly
+        int sub_index = get_module_index(handle);
+        int maxDelay = global_sensors_list[sub_index].maxDelay;
+        int minDelay = global_sensors_list[sub_index].minDelay;
+        if (period_ns < minDelay) {
+            period_ns = minDelay;
+        } else if (period_ns > maxDelay) {
+            period_ns = maxDelay;
+        }
+
+        retval = v1->setDelay((sensors_poll_device_t*)v1, handle, period_ns);
+
+        // Batch should only fail for internal errors
+        if (retval < 0) {
+            ALOGE("setDelay() returned %d", retval);
+        }
+#endif
     } else {
         ALOGE("IGNORING batch() call to non-API-compliant sensor handle=%d !", handle);
     }
@@ -400,7 +431,14 @@ int sensors_poll_context_t::flush(int handle) {
     int local_handle = get_local_handle(handle);
     sensors_poll_device_1_t* v1 = this->get_v1_device_by_handle(handle);
     if (halIsCompliant(this, handle) && local_handle >= 0 && v1) {
+#if 0
         retval = v1->flush(v1, local_handle);
+#else
+        // FIXME: for now sensorservice allows -EINVAL as return value
+        // for non-oneshot sensors. This may change in future and flush()
+        // will need to generate META_DATA_FLUSH_COMPLETE events.
+        retval = -EINVAL;
+#endif
     } else {
         ALOGE("IGNORING flush() call to non-API-compliant sensor handle=%d !", handle);
     }
@@ -574,6 +612,28 @@ static void lazy_init_modules() {
 }
 
 /*
+ * Fix the flags of the sensor to be compliant with the API version
+ * reported by the wrapper.
+ */
+static void fix_sensor_flags(sensor_t& sensor) {
+    sensor.fifoReservedEventCount = 0;
+    sensor.fifoMaxEventCount = 0;
+
+    if (sensor.type == SENSOR_TYPE_PROXIMITY ||
+            sensor.type == SENSOR_TYPE_TILT_DETECTOR) {
+        unsigned int new_flags = SENSOR_FLAG_WAKE_UP | SENSOR_FLAG_ON_CHANGE_MODE;
+        ALOGV("Changing flags of handle=%d from %x to %x",
+                sensor.handle, (unsigned int) sensor.flags, new_flags);
+        sensor.flags = new_flags;
+    }
+
+    if (sensor.type == SENSOR_TYPE_PROXIMITY) {
+        ALOGV("override proximity range");
+        sensor.maxRange = 5.0;
+    }
+}
+
+/*
  * Lazy-initializes global_sensors_count, global_sensors_list, and module_sensor_handles.
  */
 static void lazy_init_sensors_list() {
@@ -631,6 +691,8 @@ static void lazy_init_sensors_list() {
             mutable_sensor_list[mutable_sensor_index].handle = global_handle;
             ALOGV("module_index %d, local_handle %d, global_handle %d",
                     module_index, local_handle, global_handle);
+
+            fix_sensor_flags(mutable_sensor_list[mutable_sensor_index]);
 
             mutable_sensor_index++;
         }
