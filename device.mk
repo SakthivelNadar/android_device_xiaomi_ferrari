@@ -116,6 +116,9 @@ PRODUCT_PACKAGES += \
     sensors.msm8916 \
     android.hardware.sensors@1.0-impl
 
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/sensors/hals.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sensors/_hals.conf
+
 # shims
 PRODUCT_PACKAGES += \
     libcamera_shim \
