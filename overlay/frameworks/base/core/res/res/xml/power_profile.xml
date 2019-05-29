@@ -31,13 +31,14 @@
     <item name="dsp.video">88</item>
     <item name="radio.active">300</item>
     <item name="gps.on">27</item>
+    <item name="cpu.suspend">3.5</item>
     <item name="battery.capacity">3010</item>
     <item name="radio.scanning">3</item>
     <array name="radio.on">
         <value>3</value>
         <value>3</value>
     </array>
-    <array name="cpu.speeds">
+    <array name="cpu.core_speeds.cluster0">
         <value>800000</value>
         <value>960000</value>
         <value>1113600</value>
@@ -46,8 +47,8 @@
         <value>1612800</value>
         <value>1651200</value>
     </array>
-    <item name="cpu.idle">3.5</item>
-    <array name="cpu.active">
+    <item name="cpu.clusters.cores">8</item>
+    <array name="cpu.core_power.cluster0">
         <value>136</value>
         <value>154</value>
         <value>174</value>
