@@ -122,6 +122,9 @@ PRODUCT_PACKAGES += \
     libshims_flp \
     libshims_get_process_name
 
+# Shipping API level (for CTS backward compatibility)
+PRODUCT_SHIPPING_API_LEVEL := 19
+
 # System Properties
 $(call inherit-product, device/xiaomi/ferrari/system_prop.mk)
 
