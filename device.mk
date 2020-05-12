@@ -122,6 +122,9 @@ PRODUCT_PACKAGES += \
     libshims_flp \
     libshims_get_process_name
 
+# System Properties
+$(call inherit-product, device/xiaomi/ferrari/system_prop.mk)
+
 # Thermal
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/thermal-engine-8939.conf:system/etc/thermal-engine-8939.conf \
