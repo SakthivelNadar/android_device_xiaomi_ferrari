@@ -58,10 +58,8 @@ endif
 #else
 LOCAL_C_INCLUDES += $(call project-path-for,qcom-display)/libgralloc
 #endif
-LOCAL_C_INCLUDES += $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include
-LOCAL_C_INCLUDES += $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include/media
-LOCAL_ADDITIONAL_DEPENDENCIES := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
 
+LOCAL_HEADER_LIBRARIES := generated_kernel_headers
 LOCAL_SHARED_LIBRARIES := libcamera_client liblog libhardware libutils libcutils libdl liblog libgui
 LOCAL_SHARED_LIBRARIES += libmmcamera_interface libmmjpeg_interface
 LOCAL_SHARED_LIBRARIES += libhidltransport libsensor android.hidl.token@1.0-utils android.hardware.graphics.bufferqueue@1.0
