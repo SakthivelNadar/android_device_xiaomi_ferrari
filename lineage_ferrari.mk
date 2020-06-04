@@ -21,6 +21,9 @@ $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 # Must define platform variant before including any common things
 TARGET_BOARD_PLATFORM_VARIANT := msm8939
 
+# Apex
+$(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
+
 # Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := ferrari
 PRODUCT_NAME := lineage_ferrari
